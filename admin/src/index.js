@@ -5,6 +5,8 @@ import PluginIcon from "./components/PluginIcon";
 import pluginId from "./pluginId";
 
 const { name, displayName } = pluginPkg.strapi;
+console.log(pluginPkg);
+//console.log("pluginId " + pluginId + ", name " + name + ", displayName " + displayName);
 
 export default {
   register(app) {
@@ -15,8 +17,11 @@ export default {
         id: `${pluginId}.plugin.name`,
         defaultMessage: displayName,
       },
-      Component: async () =>
-        import(/* webpackChunkName: "[request]" */ "./pages/App"),
+      Component: async () => {
+        const component = await import(/* webpackChunkName: "[request]" */ './pages/App');
+
+        return component;
+      }
     });
     app.registerPlugin({ id: pluginId, name });
   },
